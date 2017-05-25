@@ -20,4 +20,13 @@ describe('Read', () => {
         done()
       })
   })
+
+  it('should find a user with a specific id', (done) => {
+    // Note: Mongoose handles _id conversion
+    User.findOne({ _id: brian._id })
+      .then((user) => {
+        assert(user.name === 'Brian')
+        done()
+      })
+  })
 })

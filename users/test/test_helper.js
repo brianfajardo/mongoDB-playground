@@ -12,9 +12,7 @@ before((done) => {
     .on('error', err => console.log('Error:', err))
 })
 
+// Clear database then begin next test
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop(() => {
-    // Clear database then begin next test
-    done()
-  })
+  mongoose.connection.collections.users.drop(() => done())
 })
