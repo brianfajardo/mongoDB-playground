@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 // Methods provided by Mocha
+// before runs only once
 before((done) => {
   mongoose.connect('mongodb://localhost/users_test')
   mongoose.connection
