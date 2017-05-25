@@ -12,7 +12,7 @@ describe('Delete', () => {
   })
 
   // Specific delete on model instance
-  it('model instance remove', (done) => {
+  it('model instance: remove', (done) => {
     brian.remove()
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {
@@ -22,7 +22,7 @@ describe('Delete', () => {
   })
 
   // Batch delete on User class
-  it('class method remove', (done) => {
+  it('model class: remove', (done) => {
     User.remove({ name: 'Brian' })
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {
@@ -33,7 +33,7 @@ describe('Delete', () => {
 
   // Search by query and remove
   // first record that matches criteria
-  it('class method findOneAndRemove', (done) => {
+  it('model class: findOneAndRemove', (done) => {
     User.findOneAndRemove({ name: 'Brian' })
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {
@@ -42,7 +42,7 @@ describe('Delete', () => {
       })
   })
 
-  it('class method findByIdAndRemove', (done) => {
+  it('model class: findByIdAndRemove', (done) => {
     User.findByIdAndRemove({ _id: brian._id })
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {
