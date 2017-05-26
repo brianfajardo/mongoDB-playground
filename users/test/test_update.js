@@ -1,12 +1,12 @@
 const assert = require('assert')
-const User = require('../src/model_User')
+const User = require('../src/models/User')
 
 describe('Update', () => {
 
   let brian
 
   beforeEach((done) => {
-    brian = new User({ name: 'Brian', postCount: 0 })
+    brian = new User({ name: 'Brian', postCount: 0, likes: 0 })
     brian.save()
       .then(() => done())
   })
@@ -56,11 +56,11 @@ describe('Update', () => {
   // from server straight to mongo with update operators
 
   // temporarily benching this test with xit
-  xit('should increment the users\' postcount by 1', (done) => {
-    User.update({ name: 'Brian' }, { $inc: { postCount: 1 } })
+  it('should increment the users\' likes postcount by 1', (done) => {
+    User.update({ name: 'Brian' }, { $inc: { likes: 1 } })
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {
-        assert(user.postCount === 1)
+        assert(user.likes === 1)
         done()
       })
   })
