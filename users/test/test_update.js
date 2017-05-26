@@ -22,31 +22,30 @@ describe('Update', () => {
   }
 
   // set persists only in memory
-  it('model instance: set & save', (done) => {
+  it('should "set" and "save" a property on the user instance', (done) => {
     brian.set('name', 'Marco')
     assertName(brian.save(), done)
   })
 
-  it('model instance: update', (done) => {
+  it('should update a property on the user instance', (done) => {
     assertName(brian.update({ name: 'Marco' }), done)
   })
 
-  // Batch update
-  it('model class: update', (done) => {
+  it('should update all users on the class that fits query', (done) => {
     assertName(
       User.update({ name: 'Brian' }, { name: 'Marco' }),
       done
     )
   })
 
-  it('model class: findOneAndUpdate', (done) => {
+  it('should update the first user that meets the query', (done) => {
     assertName(
       User.findOneAndUpdate({ name: 'Brian' }, { name: 'Marco' }),
       done
     )
   })
 
-  it('model class: findByIdAndUpdate', (done) => {
+  it('should update the user found only by ID', (done) => {
     assertName(
       User.findByIdAndUpdate(brian._id, { name: 'Marco' }),
       done

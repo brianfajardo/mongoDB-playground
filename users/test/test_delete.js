@@ -11,43 +11,28 @@ describe('Delete', () => {
       .then(() => done())
   })
 
-  // Specific delete on model instance
-  it('model instance: remove', (done) => {
-    brian.remove()
+  function assertDeletion(method, done) {
+    method
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {
         assert(user === null)
         done()
       })
+  }
+
+  it('should delete the specific user instance', (done) => {
+    assertDeletion(brian.remove(), done)
   })
 
-  // Batch delete on User class
-  it('model class: remove', (done) => {
-    User.remove({ name: 'Brian' })
-      .then(() => User.findOne({ name: 'Brian' }))
-      .then((user) => {
-        assert(user === null)
-        done()
-      })
+  it('should delete all users in the class which meets query', (done) => {
+    assertDeletion(User.remove({ name: 'Brian' }), done)
   })
 
-  // Search by query and remove
-  // first record that matches criteria
-  it('model class: findOneAndRemove', (done) => {
-    User.findOneAndRemove({ name: 'Brian' })
-      .then(() => User.findOne({ name: 'Brian' }))
-      .then((user) => {
-        assert(user === null)
-        done()
-      })
+  it('should delete the first user found', (done) => {
+    assertDeletion(User.findOneAndRemove({ name: 'Brian' }), done)
   })
 
-  it('model class: findByIdAndRemove', (done) => {
-    User.findByIdAndRemove({ _id: brian._id })
-      .then(() => User.findOne({ name: 'Brian' }))
-      .then((user) => {
-        assert(user === null)
-        done()
-      })
+  it('should delete the user found only by ID', (done) => {
+    assertDeletion(User.findByIdAndRemove({ _id: brian._id }), done)
   })
 })

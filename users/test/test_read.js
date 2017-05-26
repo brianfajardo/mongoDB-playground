@@ -12,7 +12,7 @@ describe('Read', () => {
   })
 
   it('should find all users with a name of Brian', (done) => {
-    User.find({ name: 'Brian' })
+    User.find({ name: 'Brian' }) // Returns an array
       .then((users) => {
         // _id is an object ID,
         // requires toString for equality comparison

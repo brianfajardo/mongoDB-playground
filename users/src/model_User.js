@@ -2,11 +2,9 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
-const userSchema = new Schema({
-  name: String,
-})
+const userSchema = new Schema({ name: String })
 
-// User represents the entire collection of data
+// Compiling model for mongoose to use with database
 const User = mongoose.model('user', userSchema)
 
 module.exports = User
