@@ -33,4 +33,22 @@ describe('Subdocuments', () => {
         done()
       })
   })
+
+  it('should be able to remove existing subdocuments', (done) => {
+    const brian = new User({
+      name: 'Brian',
+      posts: [{ title: 'Sun and Moon' }],
+    })
+    brian.save()
+      .then(() => User.findOne({ name: 'Brian' }))
+      .then((user) => {
+        user.posts[0].remove()
+        return user.save()
+      })
+      .then(() => User.findOne({ name: 'Brian' }))
+      .then((user) => {
+        assert(user.posts.length === 0)
+        done()
+      })
+  })
 })
