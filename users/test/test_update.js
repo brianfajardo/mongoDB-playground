@@ -55,7 +55,8 @@ describe('Update', () => {
   // Instead of fetching from DB, just send instructions
   // from server straight to mongo with update operators
 
-  it('should increment the users\' postcount by 1', (done) => {
+  // temporarily benching this test with xit
+  xit('should increment the users\' postcount by 1', (done) => {
     User.update({ name: 'Brian' }, { $inc: { postCount: 1 } })
       .then(() => User.findOne({ name: 'Brian' }))
       .then((user) => {

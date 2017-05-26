@@ -12,8 +12,16 @@ const userSchema = new Schema({
     },
     required: [true, 'Name is required'],
   },
-  postCount: Number,
   posts: [postSchema],
+})
+
+// postCount will be based on the # of posts in the userSchema.
+// postCount will be a virtual type
+// getter function with reserved keyword function
+
+userSchema.virtual('postCount').get(function () {
+  // this == user instance
+  return this.posts.length
 })
 
 // Compiling model for mongoose to use with database
