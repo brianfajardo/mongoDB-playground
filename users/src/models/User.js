@@ -14,6 +14,11 @@ const UserSchema = new Schema({
   },
   posts: [PostSchema],
   likes: Number,
+  blogPosts: [{
+    // Associate type with compile refs
+    type: Schema.Types.ObjectId,
+    ref: 'blogPost',
+  }],
 })
 
 // postCount will be based on the # of posts in the userSchema.

@@ -5,6 +5,7 @@ mongoose.Promise = global.Promise
 
 // Methods provided by Mocha
 // before runs only once
+
 before((done) => {
   mongoose.connect('mongodb://localhost/users_test')
   mongoose.connection
@@ -12,7 +13,15 @@ before((done) => {
     .on('error', err => console.log('Error:', err))
 })
 
-// Clear database then begin next test
+// Clear each database collection then begin next test.
+// Cannot drop multiple collections synchronously.
+// Mongoose normalizes camel-cased collections
+
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop(() => done())
+  const { users, blogposts, comments } = mongoose.connection.collections
+  users.drop(() => {
+    blogposts.drop(() => {
+      comments.drop(() => done())
+    })
+  })
 })
