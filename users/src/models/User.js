@@ -25,9 +25,24 @@ const UserSchema = new Schema({
 // postCount will be a virtual type.
 // getter function with reserved keyword function
 
-UserSchema.virtual('postCount').get(function () {
-  // this == user instance
+UserSchema.virtual('postCount').get(function virtualPostCount() {
+  // this === user instance
+  // fat arrow would make `this` === this file
   return this.posts.length
+})
+
+// The $in operator selects the documents where the value
+// of a field equals any value in the specified array.
+
+UserSchema.pre('remove', function preRemove(next) {
+  // Dealing with cyclic requires
+  const BlogPost = mongoose.model('blogPost')
+
+  // Look at BlogPost collection and if a blog posts' _id
+  // exists in this.blogPosts (array), remove it from collection
+
+  BlogPost.remove({ _id: { $in: this.blogPosts } })
+    .then(() => next())
 })
 
 // Compiling model for mongoose to use with database
